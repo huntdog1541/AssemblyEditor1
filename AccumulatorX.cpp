@@ -6,6 +6,7 @@
  */
 
 #include "AccumulatorX.hpp"
+#include <limits>
 
 using namespace std;
 
@@ -30,9 +31,22 @@ int Accum::getValue()
 
 void Accum::translateVal()
 	{
-		int i;
-		for(i = 0; i < 32; i++)
+		if(currentValue > numeric_limits<int>::max())
 		{
+			perror("Can not translate a number bigger than allowed\n");
+			return;
+		}
+		int q = currentValue, i = 1, j, m = 0;
+		int biny[32];
+		while(q != 0)
+		{
+			biny[i++] = q % 2;
+			q = q / 2;
+		}
+		for(j = i -1; j > 0; j--)
+		{
+			value[m++] = biny[j];
+			cout << biny[j];
 		}
 	}
 
